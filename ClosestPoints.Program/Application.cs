@@ -31,8 +31,9 @@ namespace ClosestPoints.Program
                 new Point(0, 20),
                 new Point(15, 6)
             };
-
+            // call service
             double minDistance = _service.GetClosestPoints(points);
+            // output
             Console.WriteLine($"Closest distance is: {minDistance}");
         }
     }
