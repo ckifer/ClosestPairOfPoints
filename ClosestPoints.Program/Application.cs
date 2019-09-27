@@ -9,6 +9,7 @@ namespace ClosestPoints.Program
     {
         private readonly ClosestPointService _service;
 
+        // constructor injection
         public Application(ClosestPointService service)
         {
             _service = service;

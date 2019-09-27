@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace ClosestPoint.Services
 {
+    // business logic service class
     public class ClosestPointService
     {
         public double GetClosestPoints(List<Point> points)
@@ -15,10 +16,6 @@ namespace ClosestPoint.Services
             List<Point> sortedByY = points.OrderBy(p => p.Y).ToList();
 
             // now find smallest distance between two points in both halves
-
-
-            // think about those that cross the midpoint line
-            // get sub array of all the points whose X is closer than distance to the mid point (look for something smaller than current smallest distance)
             return GetClosestPointsRecursive(sortedByX, sortedByY);
         }
 
@@ -41,7 +38,7 @@ namespace ClosestPoint.Services
             List<Point> rightX = sortedByX.Skip(sortedByX.Count / 2).ToList();
             double midX = leftX.Last().X;
 
-            // split array into left and right halves for y axis based on x to make quadrants
+            // split array into left and right halves for y axis based on x to make quadrants (kinda)
             List<Point> leftY = sortedByY.Where(p => p.X <= midX).ToList();
             List<Point> rightY = sortedByY.Where(p => p.X > midX).ToList();
 
@@ -52,19 +49,24 @@ namespace ClosestPoint.Services
 
             // get the closer distance from each half
             double closestDistance = double.MinValue;
+            // if not left then right
             if (leftDist == double.MinValue)
             {
                 closestDistance = rightDist;
             }
+            // if not right then left
             else if (rightDist == double.MinValue)
             {
                 closestDistance = leftDist;
             }
+            // the closest distance is whatever is less than the other
             else
             {
                 closestDistance = leftDist < rightDist ? leftDist : rightDist;
             }
 
+            // think about those that cross the midpoint line
+            // get sub array of all the points whose X is closer than distance to the mid point (look for something smaller than current smallest distance)
             return FindDistanceCloserToDivider(sortedByY, midX, closestDistance);
         }
 
@@ -79,7 +81,7 @@ namespace ClosestPoint.Services
                 // need to check only the 7 points
                 for (int j = i + 1; j < i + 8 && j < sortedByY.Count; j++)
                 {
-                    // Check if this pair of points closer than minDistanse
+                    // Check if this pair of points is closer than current clostestDistance
                     double distance = Distance(sortedByY[i], sortedByY[j]);
                     if (distance < closestDistance)
                     {
@@ -90,6 +92,7 @@ namespace ClosestPoint.Services
             return closestDistance;
         }
 
+        // calculate distance between two points
         private double Distance(Point p1, Point p2)
         {
             return Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));

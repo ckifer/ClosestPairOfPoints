@@ -16,8 +16,10 @@ namespace ClosestPoints.Program
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
                 IContainer container = ContainerConfig.Configure();
 
+                // dependency injection scope
                 using (var scope = container.BeginLifetimeScope())
                 {
+                    // begin application
                     scope.Resolve<IApplication>().Run();
                     Environment.Exit(0);
                 }

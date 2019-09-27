@@ -6,6 +6,7 @@ namespace ClosestPoints.Program.Config
 {
     public class ContainerConfig
     {
+        // inversion of control configuration for DI
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();

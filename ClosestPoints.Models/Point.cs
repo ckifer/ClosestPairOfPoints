@@ -1,5 +1,8 @@
 ﻿namespace ClosestPoints.Models
 {
+    /// <summary>
+    /// Model class for an x, y coordinate
+    /// </summary>
     public class Point
     {
         public Point(int x, int y)
